@@ -1,0 +1,88 @@
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    color: #1e3a5f;
+    font-size: 28px;
+    margin: 0;
+  }
+  p {
+    color: #6b7280;
+    margin: 8px 0 0;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #2d5a87;
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: #1e3a5f;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #2d5a87;
+  }
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}

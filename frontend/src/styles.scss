@@ -1,0 +1,31 @@
+/* ZimEMR Global Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #111827;
+  background: #f3f4f6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: #2d5a87; text-decoration: none; }
+
+/* Utility badge colors used by StatusBadgePipe */
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-danger  { background: #fee2e2; color: #991b1b; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-info    { background: #dbeafe; color: #1e40af; }
+.badge-primary { background: #e0e7ff; color: #3730a3; }
+.badge-muted   { background: #f3f4f6; color: #6b7280; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }

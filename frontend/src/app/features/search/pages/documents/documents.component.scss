@@ -1,0 +1,10 @@
+.page-header-bar { margin-bottom: 20px; h1 { margin: 0; color: #1e3a5f; } }
+.card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.search-row { display: flex; gap: 12px; input { flex: 1; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; &:focus { outline: none; border-color: #2d5a87; } } }
+.btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: 500; cursor: pointer; &:disabled { opacity: 0.6; } }
+.btn-primary { background: #1e3a5f; color: white; }
+.results { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+.result-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; .source { font-weight: 600; color: #1e3a5f; } .similarity { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; } }
+.chunk { color: #374151; font-size: 14px; line-height: 1.6; margin: 0 0 10px; }
+.type { font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; letter-spacing: 0.05em; }

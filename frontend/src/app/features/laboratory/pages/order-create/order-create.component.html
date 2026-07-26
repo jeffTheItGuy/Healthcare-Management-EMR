@@ -1,0 +1,35 @@
+<div class="page-header-bar">
+  <h1>New Lab Order</h1>
+</div>
+
+<div class="card" style="max-width: 600px;">
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Order Number *</label>
+      <input formControlName="order_number" />
+    </div>
+    <div class="form-group">
+      <label>Patient ID *</label>
+      <input formControlName="patient_id" />
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select formControlName="priority">
+        <option value="ROUTINE">Routine</option>
+        <option value="URGENT">Urgent</option>
+        <option value="STAT">STAT</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Clinical Notes</label>
+      <textarea formControlName="clinical_notes" rows="3"></textarea>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-secondary" routerLink="/lab/orders">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Creating... } @else { Create Order }
+      </button>
+    </div>
+  </form>
+</div>

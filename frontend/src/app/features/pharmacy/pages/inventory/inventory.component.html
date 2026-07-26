@@ -1,0 +1,24 @@
+<div class="page-header-bar">
+  <h1>Pharmacy Inventory</h1>
+</div>
+
+<div class="card">
+  <table class="data-table">
+    <thead>
+      <tr><th>Medication ID</th><th>Total</th><th>Available</th><th>Reserved</th><th>Location</th></tr>
+    </thead>
+    <tbody>
+      @for (i of inventory; track i.inventory_id) {
+        <tr>
+          <td>{{ i.medication_id }}</td>
+          <td>{{ i.total_quantity }}</td>
+          <td>{{ i.available_quantity }}</td>
+          <td>{{ i.reserved_quantity }}</td>
+          <td>{{ i.location_rack || '-' }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5" class="empty">No inventory items</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

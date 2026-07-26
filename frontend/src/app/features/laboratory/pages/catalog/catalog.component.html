@@ -1,0 +1,66 @@
+<div class="page-header-bar">
+  <h1>Lab Test Catalog</h1>
+  <button class="btn btn-primary" (click)="showForm = !showForm">
+    {{ showForm ? 'Cancel' : '+ Add Test' }}
+  </button>
+</div>
+
+@if (showForm) {
+  <div class="card" style="max-width: 600px; margin-bottom: 20px;">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Test Code *</label>
+          <input formControlName="test_code" />
+        </div>
+        <div class="form-group">
+          <label>Test Name *</label>
+          <input formControlName="test_name" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <input formControlName="category" />
+        </div>
+        <div class="form-group">
+          <label>Sample Type</label>
+          <input formControlName="sample_type" />
+        </div>
+        <div class="form-group">
+          <label>Base Price</label>
+          <input formControlName="base_price" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Currency</label>
+          <select formControlName="currency_code">
+            <option value="USD">USD</option>
+            <option value="ZiG">ZiG</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Save Test</button>
+      </div>
+    </form>
+  </div>
+}
+
+<div class="card">
+  <table class="data-table">
+    <thead>
+      <tr><th>Code</th><th>Name</th><th>Category</th><th>Sample</th><th>Price</th></tr>
+    </thead>
+    <tbody>
+      @for (t of tests; track t.test_id) {
+        <tr>
+          <td>{{ t.test_code }}</td>
+          <td>{{ t.test_name }}</td>
+          <td>{{ t.category || '-' }}</td>
+          <td>{{ t.sample_type || '-' }}</td>
+          <td>{{ t.base_price ? (t.base_price + ' ' + t.currency_code) : '-' }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5" class="empty">No tests in catalog</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

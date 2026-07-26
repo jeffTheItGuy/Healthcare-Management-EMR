@@ -1,0 +1,44 @@
+<div class="page-header-bar">
+  <h1>Patients</h1>
+  <a routerLink="new" class="btn btn-primary">+ New Patient</a>
+</div>
+
+<div class="card">
+  <div class="search-bar">
+    <input type="text" [formControl]="searchControl" placeholder="Search by name, phone, or number..." />
+  </div>
+
+  @if (loading) {
+    <p class="empty">Loading patients...</p>
+  } @else if (patients.length === 0) {
+    <p class="empty">No patients found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Patient #</th>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of patients; track p.patient_id) {
+          <tr>
+            <td>{{ p.patient_number }}</td>
+            <td>{{ p.first_name }} {{ p.last_name }}</td>
+            <td>{{ p.date_of_birth | dateFormat }}</td>
+            <td>{{ p.gender }}</td>
+            <td>{{ p.phone_primary || '-' }}</td>
+            <td>
+              <a [routerLink]="[p.patient_id]" class="link">View</a>
+              <a [routerLink]="[p.patient_id, 'edit']" class="link">Edit</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

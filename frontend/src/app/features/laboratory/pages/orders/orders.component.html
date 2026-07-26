@@ -1,0 +1,29 @@
+<div class="page-header-bar">
+  <h1>Lab Orders</h1>
+  <a routerLink="new" class="btn btn-primary">+ New Order</a>
+</div>
+
+<div class="card">
+  @if (loading) {
+    <p class="empty">Loading orders...</p>
+  } @else if (orders.length === 0) {
+    <p class="empty">No lab orders found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>Order #</th><th>Date</th><th>Priority</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        @for (o of orders; track o.order_id) {
+          <tr>
+            <td>{{ o.order_number }}</td>
+            <td>{{ o.order_date | dateFormat }}</td>
+            <td>{{ o.priority }}</td>
+            <td><span class="badge" [class]="o.status | statusBadge">{{ o.status }}</span></td>
+            <td><a [routerLink]="[o.order_id, 'results']" class="link">Enter Results</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

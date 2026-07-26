@@ -1,0 +1,101 @@
+<div class="page-header-bar">
+  <h1>{{ patientId ? 'Edit Patient' : 'New Patient' }}</h1>
+</div>
+
+<div class="card">
+  @if (error) {
+    <div class="alert alert-error">{{ error }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Patient Number *</label>
+        <input formControlName="patient_number" placeholder="P-2024-000001" />
+      </div>
+      <div class="form-group">
+        <label>National ID</label>
+        <input formControlName="national_id" placeholder="63-1234567-A-12" />
+      </div>
+      <div class="form-group">
+        <label>First Name *</label>
+        <input formControlName="first_name" />
+      </div>
+      <div class="form-group">
+        <label>Last Name *</label>
+        <input formControlName="last_name" />
+      </div>
+      <div class="form-group">
+        <label>Date of Birth *</label>
+        <input type="date" formControlName="date_of_birth" />
+      </div>
+      <div class="form-group">
+        <label>Gender *</label>
+        <select formControlName="gender">
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Blood Group</label>
+        <input formControlName="blood_group" placeholder="O+" />
+      </div>
+      <div class="form-group">
+        <label>Phone Primary</label>
+        <input formControlName="phone_primary" placeholder="0771234567" />
+      </div>
+      <div class="form-group">
+        <label>Phone Secondary</label>
+        <input formControlName="phone_secondary" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" />
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input formControlName="city" />
+      </div>
+      <div class="form-group">
+        <label>Suburb</label>
+        <input formControlName="suburb" />
+      </div>
+      <div class="form-group full-width">
+        <label>Address</label>
+        <textarea formControlName="address" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Emergency Contact</label>
+        <input formControlName="emergency_contact_name" />
+      </div>
+      <div class="form-group">
+        <label>Emergency Phone</label>
+        <input formControlName="emergency_contact_phone" />
+      </div>
+      <div class="form-group">
+        <label>Medical Aid Number</label>
+        <input formControlName="medical_aid_number" />
+      </div>
+      <div class="form-group">
+        <label>Medical Aid Plan</label>
+        <input formControlName="medical_aid_plan" />
+      </div>
+      <div class="form-group full-width">
+        <label>Allergies</label>
+        <textarea formControlName="allergies" rows="2"></textarea>
+      </div>
+      <div class="form-group full-width">
+        <label>Chronic Conditions</label>
+        <textarea formControlName="chronic_conditions" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn btn-secondary" routerLink="/patients">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Saving... } @else { Save Patient }
+      </button>
+    </div>
+  </form>
+</div>

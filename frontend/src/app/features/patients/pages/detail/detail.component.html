@@ -1,0 +1,42 @@
+@if (patient) {
+  <div class="page-header-bar">
+    <div>
+      <h1>{{ patient.first_name }} {{ patient.last_name }}</h1>
+      <span class="subtitle">{{ patient.patient_number }} · {{ patient.national_id || 'No ID' }}</span>
+    </div>
+    <div class="actions">
+      <a [routerLink]="['edit']" class="btn btn-secondary">Edit</a>
+      <button class="btn btn-danger" (click)="deletePatient()">Delete</button>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="card">
+      <h3>Demographics</h3>
+      <div class="field-row"><label>Date of Birth</label><span>{{ patient.date_of_birth | dateFormat }}</span></div>
+      <div class="field-row"><label>Gender</label><span>{{ patient.gender }}</span></div>
+      <div class="field-row"><label>Blood Group</label><span>{{ patient.blood_group || '-' }}</span></div>
+    </div>
+    <div class="card">
+      <h3>Contact</h3>
+      <div class="field-row"><label>Phone</label><span>{{ patient.phone_primary || '-' }}</span></div>
+      <div class="field-row"><label>Email</label><span>{{ patient.email || '-' }}</span></div>
+      <div class="field-row"><label>Address</label><span>{{ patient.address || '-' }}</span></div>
+    </div>
+    <div class="card">
+      <h3>Medical Aid</h3>
+      <div class="field-row"><label>Provider</label><span>{{ patient.medical_aid_provider_id || '-' }}</span></div>
+      <div class="field-row"><label>Number</label><span>{{ patient.medical_aid_number || '-' }}</span></div>
+      <div class="field-row"><label>Plan</label><span>{{ patient.medical_aid_plan || '-' }}</span></div>
+    </div>
+    <div class="card">
+      <h3>Clinical Notes</h3>
+      <div class="field-row"><label>Allergies</label><span>{{ patient.allergies || 'None recorded' }}</span></div>
+      <div class="field-row"><label>Chronic</label><span>{{ patient.chronic_conditions || 'None recorded' }}</span></div>
+    </div>
+  </div>
+} @else if (loading) {
+  <p class="empty">Loading patient...</p>
+} @else {
+  <p class="empty">Patient not found</p>
+}

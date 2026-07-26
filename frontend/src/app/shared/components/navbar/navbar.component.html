@@ -1,0 +1,8 @@
+<nav class="navbar">
+  <div class="nav-brand">ZimEMR</div>
+  <div class="nav-actions">
+    <span class="user">{{ auth.currentUserValue?.first_name }} {{ auth.currentUserValue?.last_name }}</span>
+    <span class="role">{{ auth.currentUserValue?.role }}</span>
+    <button class="logout" (click)="auth.logout()">Logout</button>
+  </div>
+</nav>

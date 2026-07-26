@@ -1,0 +1,83 @@
+<div class="dashboard">
+  <header class="page-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, {{ auth.currentUserValue?.first_name }}</p>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: #dbeafe; color: #1e40af;">👥</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.totalPatients }}</span>
+        <span class="stat-label">Total Patients</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: #dcfce7; color: #166534;">📅</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.todayAppointments }}</span>
+        <span class="stat-label">Today's Appointments</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: #fef3c7; color: #92400e;">🛏️</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.admittedPatients }}</span>
+        <span class="stat-label">Admitted Patients</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: #fce7f3; color: #9d174d;">🧪</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.pendingLabOrders }}</span>
+        <span class="stat-label">Pending Lab Orders</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <h3>Recent Appointments</h3>
+      @if (recentAppointments.length === 0) {
+        <p class="empty">No appointments today</p>
+      } @else {
+        <table class="data-table">
+          <thead>
+            <tr><th>Patient ID</th><th>Type</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            @for (a of recentAppointments; track a.appointment_id) {
+              <tr>
+                <td>{{ a.patient_id }}</td>
+                <td>{{ a.appointment_type }}</td>
+                <td><span class="badge" [class]="a.status | statusBadge">{{ a.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <div class="card">
+      <h3>Recent Admissions</h3>
+      @if (recentAdmissions.length === 0) {
+        <p class="empty">No active admissions</p>
+      } @else {
+        <table class="data-table">
+          <thead>
+            <tr><th>Adm #</th><th>Type</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            @for (adm of recentAdmissions; track adm.admission_id) {
+              <tr>
+                <td>{{ adm.admission_number }}</td>
+                <td>{{ adm.admission_type }}</td>
+                <td><span class="badge" [class]="adm.status | statusBadge">{{ adm.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+</div>

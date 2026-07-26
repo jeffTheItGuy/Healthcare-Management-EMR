@@ -1,0 +1,29 @@
+<div class="page-header-bar">
+  <h1>Document Search</h1>
+</div>
+
+<div class="card" style="max-width: 700px;">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="search-row">
+      <input formControlName="query" placeholder="Search clinical guidelines, protocols..." />
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Searching... } @else { Search }
+      </button>
+    </div>
+  </form>
+</div>
+
+@if (results.length > 0) {
+  <div class="results">
+    @for (r of results; track $index) {
+      <div class="result-card">
+        <div class="result-header">
+          <span class="source">{{ r.source_title }}</span>
+          <span class="similarity">{{ (r.similarity * 100).toFixed(1) }}%</span>
+        </div>
+        <p class="chunk">{{ r.chunk_text }}</p>
+        <span class="type">{{ r.source_type }}</span>
+      </div>
+    }
+  </div>
+}

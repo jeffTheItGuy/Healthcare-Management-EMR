@@ -1,0 +1,53 @@
+<div class="page-header-bar">
+  <h1>Medications</h1>
+  <button class="btn btn-primary" (click)="showForm = !showForm">{{ showForm ? 'Cancel' : '+ Add Medication' }}</button>
+</div>
+
+@if (showForm) {
+  <div class="card" style="max-width: 600px; margin-bottom: 20px;">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group"><label>Generic Name *</label><input formControlName="generic_name" /></div>
+        <div class="form-group"><label>Brand Name</label><input formControlName="brand_name" /></div>
+        <div class="form-group">
+          <label>Dosage Form *</label>
+          <select formControlName="dosage_form">
+            <option value="TABLET">Tablet</option>
+            <option value="CAPSULE">Capsule</option>
+            <option value="SYRUP">Syrup</option>
+            <option value="INJECTION">Injection</option>
+            <option value="CREAM">Cream</option>
+            <option value="DROPS">Drops</option>
+            <option value="INHALER">Inhaler</option>
+            <option value="SUPPOSITORY">Suppository</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Strength</label><input formControlName="strength" placeholder="500mg" /></div>
+        <div class="form-group"><label>Category</label><input formControlName="category" /></div>
+        <div class="form-group checkbox">
+          <label><input type="checkbox" formControlName="is_controlled" /> Controlled Substance</label>
+        </div>
+      </div>
+      <div class="actions"><button type="submit" class="btn btn-primary">Save</button></div>
+    </form>
+  </div>
+}
+
+<div class="card">
+  <table class="data-table">
+    <thead><tr><th>Name</th><th>Brand</th><th>Form</th><th>Strength</th><th>Controlled</th></tr></thead>
+    <tbody>
+      @for (m of medications; track m.medication_id) {
+        <tr>
+          <td>{{ m.generic_name }}</td>
+          <td>{{ m.brand_name || '-' }}</td>
+          <td>{{ m.dosage_form }}</td>
+          <td>{{ m.strength || '-' }}</td>
+          <td>{{ m.is_controlled ? 'Yes' : 'No' }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5" class="empty">No medications</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

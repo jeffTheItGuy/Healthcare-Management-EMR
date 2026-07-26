@@ -1,0 +1,29 @@
+<div class="page-header-bar">
+  <h1>Admissions</h1>
+  <a routerLink="/clinical/admit" class="btn btn-primary">+ Admit Patient</a>
+</div>
+
+<div class="card">
+  @if (loading) {
+    <p class="empty">Loading admissions...</p>
+  } @else if (admissions.length === 0) {
+    <p class="empty">No admissions found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>Admission #</th><th>Type</th><th>Date</th><th>Status</th><th>Discharge</th></tr>
+      </thead>
+      <tbody>
+        @for (a of admissions; track a.admission_id) {
+          <tr>
+            <td>{{ a.admission_number }}</td>
+            <td>{{ a.admission_type }}</td>
+            <td>{{ a.admission_date | dateFormat }}</td>
+            <td><span class="badge" [class]="a.status | statusBadge">{{ a.status }}</span></td>
+            <td>{{ a.discharge_date ? (a.discharge_date | dateFormat) : '-' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

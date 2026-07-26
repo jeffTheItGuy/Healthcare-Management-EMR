@@ -1,0 +1,29 @@
+@if (record) {
+  <div class="page-header-bar">
+    <h1>Medical Record</h1>
+    <span class="badge" [class.locked]="record.is_locked">{{ record.is_locked ? 'Locked' : 'Open' }}</span>
+  </div>
+
+  <div class="detail-grid">
+    <div class="card">
+      <h3>Encounter</h3>
+      <div class="field-row"><label>Type</label><span>{{ record.encounter_type }}</span></div>
+      <div class="field-row"><label>Date</label><span>{{ record.encounter_date | dateFormat }}</span></div>
+      <div class="field-row"><label>Chief Complaint</label><span>{{ record.chief_complaint || '-' }}</span></div>
+    </div>
+    <div class="card">
+      <h3>Examination</h3>
+      <div class="field-row"><label>HPI</label><span>{{ record.history_of_present_illness || '-' }}</span></div>
+      <div class="field-row"><label>Physical Exam</label><span>{{ record.physical_examination || '-' }}</span></div>
+      <div class="field-row"><label>Vitals</label><span>{{ record.vital_signs | json }}</span></div>
+    </div>
+    <div class="card full-width">
+      <h3>Assessment & Plan</h3>
+      <p>{{ record.assessment_and_plan || 'No notes recorded.' }}</p>
+    </div>
+  </div>
+} @else if (loading) {
+  <p class="empty">Loading record...</p>
+} @else {
+  <p class="empty">Record not found</p>
+}

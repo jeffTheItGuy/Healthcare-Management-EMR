@@ -1,0 +1,30 @@
+@if (invoice) {
+  <div class="page-header-bar">
+    <h1>Invoice {{ invoice.invoice_number }}</h1>
+    <span class="badge" [class]="invoice.payment_status | statusBadge">{{ invoice.payment_status }}</span>
+  </div>
+
+  <div class="detail-grid">
+    <div class="card">
+      <h3>Summary</h3>
+      <div class="field-row"><label>Subtotal</label><span>{{ invoice.subtotal | currency:invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Discount</label><span>{{ invoice.discount_amount | currency:invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Tax</label><span>{{ invoice.tax_amount | currency:invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Total</label><span>{{ invoice.total_amount | currency:invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Paid</label><span>{{ invoice.amount_paid | currency:invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Balance Due</label><span>{{ invoice.balance_due | currency:invoice.currency_code }}</span></div>
+    </div>
+    <div class="card">
+      <h3>Details</h3>
+      <div class="field-row"><label>Invoice Date</label><span>{{ invoice.invoice_date | dateFormat }}</span></div>
+      <div class="field-row"><label>Type</label><span>{{ invoice.invoice_type }}</span></div>
+      <div class="field-row"><label>Currency</label><span>{{ invoice.currency_code }}</span></div>
+      <div class="field-row"><label>Exchange Rate</label><span>{{ invoice.exchange_rate }}</span></div>
+      <div class="field-row"><label>Medical Aid Claimed</label><span>{{ invoice.medical_aid_claimed ? 'Yes' : 'No' }}</span></div>
+    </div>
+  </div>
+} @else if (loading) {
+  <p class="empty">Loading invoice...</p>
+} @else {
+  <p class="empty">Invoice not found</p>
+}

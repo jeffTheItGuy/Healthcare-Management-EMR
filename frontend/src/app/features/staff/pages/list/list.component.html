@@ -1,0 +1,31 @@
+<div class="page-header-bar">
+  <h1>Staff</h1>
+</div>
+
+<div class="card">
+  @if (loading) {
+    <p class="empty">Loading staff...</p>
+  } @else if (staff.length === 0) {
+    <p class="empty">No staff found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>Staff #</th><th>Name</th><th>Role</th><th>Department</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        @for (s of staff; track s.staff_id) {
+          <tr>
+            <td>{{ s.staff_number }}</td>
+            <td>{{ s.first_name }} {{ s.last_name }}</td>
+            <td>{{ s.role }}</td>
+            <td>{{ s.department_id || '-' }}</td>
+            <td>
+              <a [routerLink]="[s.staff_id]" class="link">View</a>
+              <a [routerLink]="[s.staff_id, 'roster']" class="link">Roster</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

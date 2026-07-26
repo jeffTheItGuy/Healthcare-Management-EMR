@@ -1,0 +1,15 @@
+@if (auth.isAuthenticated()) {
+  <div class="app-layout">
+    <app-sidebar></app-sidebar>
+    <div class="main-content">
+      <app-navbar></app-navbar>
+      <main class="page-content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+} @else {
+  <div class="auth-layout">
+    <router-outlet></router-outlet>
+  </div>
+}

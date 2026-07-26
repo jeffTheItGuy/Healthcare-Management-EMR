@@ -1,0 +1,29 @@
+<div class="page-header-bar">
+  <h1>Invoices</h1>
+</div>
+
+<div class="card">
+  @if (loading) {
+    <p class="empty">Loading invoices...</p>
+  } @else if (invoices.length === 0) {
+    <p class="empty">No invoices found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>Invoice #</th><th>Date</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        @for (inv of invoices; track inv.invoice_id) {
+          <tr>
+            <td><a [routerLink]="[inv.invoice_id]" class="link">{{ inv.invoice_number }}</a></td>
+            <td>{{ inv.invoice_date | dateFormat }}</td>
+            <td>{{ inv.total_amount | currency:inv.currency_code }}</td>
+            <td>{{ inv.amount_paid | currency:inv.currency_code }}</td>
+            <td>{{ inv.balance_due | currency:inv.currency_code }}</td>
+            <td><span class="badge" [class]="inv.payment_status | statusBadge">{{ inv.payment_status }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

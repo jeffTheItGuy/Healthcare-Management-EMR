@@ -1,0 +1,44 @@
+<div class="page-header-bar">
+  <h1>Appointments</h1>
+  <a routerLink="new" class="btn btn-primary">+ Book Appointment</a>
+</div>
+
+<div class="card">
+  <div class="filters">
+    <select [formControl]="filter.controls.status">
+      <option value="">All Statuses</option>
+      <option value="SCHEDULED">Scheduled</option>
+      <option value="CHECKED_IN">Checked In</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+    <input type="date" [formControl]="filter.controls.date" />
+  </div>
+
+  @if (loading) {
+    <p class="empty">Loading...</p>
+  } @else if (appointments.length === 0) {
+    <p class="empty">No appointments found</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>Date</th><th>Type</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        @for (a of appointments; track a.appointment_id) {
+          <tr>
+            <td>{{ a.appointment_date | dateFormat:'medium' }}</td>
+            <td>{{ a.appointment_type }}</td>
+            <td><span class="badge" [class]="a.status | statusBadge">{{ a.status }}</span></td>
+            <td>{{ a.notes || '-' }}</td>
+            <td>
+              @if (a.status !== 'CANCELLED' && a.status !== 'COMPLETED') {
+                <button class="link" (click)="cancel(a.appointment_id)">Cancel</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

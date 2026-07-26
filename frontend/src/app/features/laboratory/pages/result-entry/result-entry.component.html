@@ -1,0 +1,75 @@
+<div class="page-header-bar">
+  <h1>Result Entry — Order {{ orderId }}</h1>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <h3>Add Result</h3>
+    @if (error) { <div class="alert alert-error">{{ error }}</div> }
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Test ID *</label>
+        <input formControlName="test_id" />
+      </div>
+      <div class="form-group">
+        <label>Result Value *</label>
+        <input formControlName="result_value" />
+      </div>
+      <div class="form-group">
+        <label>Numeric Value</label>
+        <input formControlName="result_numeric" />
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <input formControlName="unit_of_measure" />
+      </div>
+      <div class="form-group">
+        <label>Reference Range</label>
+        <input formControlName="reference_range" />
+      </div>
+      <div class="form-group">
+        <label>Interpretation</label>
+        <select formControlName="interpretation">
+          <option value="NORMAL">Normal</option>
+          <option value="ABNORMAL">Abnormal</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="BORDERLINE">Borderline</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea formControlName="result_notes" rows="2"></textarea>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" formControlName="is_critical" /> Critical Result
+      </label>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          @if (loading) { Saving... } @else { Save Result }
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Existing Results</h3>
+    @if (results.length === 0) {
+      <p class="empty">No results entered yet</p>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr><th>Test</th><th>Value</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          @for (r of results; track r.result_id) {
+            <tr>
+              <td>{{ r.test_id }}</td>
+              <td>{{ r.result_value }} {{ r.unit_of_measure }}</td>
+              <td><span class="badge" [class]="r.interpretation | lowercase">{{ r.interpretation }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

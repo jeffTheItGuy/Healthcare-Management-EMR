@@ -1,0 +1,31 @@
+<div class="page-header-bar">
+  <h1>Patient Similarity</h1>
+</div>
+
+<div class="card" style="max-width: 600px;">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="search-row">
+      <input formControlName="patient_id" placeholder="Enter Patient ID..." />
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Searching... } @else { Find Similar }
+      </button>
+    </div>
+  </form>
+</div>
+
+@if (results.length > 0) {
+  <div class="card results">
+    <table class="data-table">
+      <thead><tr><th>Patient ID</th><th>Similarity</th><th>Type</th></tr></thead>
+      <tbody>
+        @for (r of results; track r.patient_id) {
+          <tr>
+            <td>{{ r.patient_id }}</td>
+            <td>{{ (r.similarity * 100).toFixed(1) }}%</td>
+            <td>{{ r.embedding_type }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

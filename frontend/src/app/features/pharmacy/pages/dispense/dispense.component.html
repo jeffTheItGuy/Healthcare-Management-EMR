@@ -1,0 +1,21 @@
+<div class="page-header-bar">
+  <h1>Dispense Medication</h1>
+</div>
+
+<div class="card" style="max-width: 600px;">
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group"><label>Prescription Item ID *</label><input formControlName="prescription_item_id" /></div>
+    <div class="form-group"><label>Batch ID</label><input formControlName="batch_id" /></div>
+    <div class="form-group"><label>Patient ID *</label><input formControlName="patient_id" /></div>
+    <div class="form-group"><label>Quantity *</label><input formControlName="quantity_dispensed" /></div>
+    <div class="form-group"><label>Unit Price</label><input formControlName="unit_price" /></div>
+    <div class="form-group"><label>Currency</label><select formControlName="currency_code"><option value="USD">USD</option><option value="ZiG">ZiG</option></select></div>
+    <div class="actions">
+      <button type="button" class="btn btn-secondary" routerLink="/pharmacy/inventory">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Dispensing... } @else { Dispense }
+      </button>
+    </div>
+  </form>
+</div>

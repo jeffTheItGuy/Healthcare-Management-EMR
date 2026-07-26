@@ -1,0 +1,33 @@
+<div class="page-header-bar">
+  <h1>Ward Map</h1>
+</div>
+
+<div class="ward-layout">
+  <div class="ward-sidebar">
+    <h3>Wards</h3>
+    @for (w of wards; track w.ward_id) {
+      <button class="ward-btn" [class.active]="selectedWard?.ward_id === w.ward_id" (click)="selectWard(w)">
+        {{ w.ward_name }} <span class="type">{{ w.ward_type }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="bed-grid">
+    @if (selectedWard) {
+      <h3>{{ selectedWard.ward_name }} — Beds</h3>
+      <div class="beds">
+        @for (b of beds; track b.bed_id) {
+          <div class="bed-card" [class]="b.status.toLowerCase()">
+            <span class="bed-number">{{ b.bed_number }}</span>
+            <span class="bed-type">{{ b.bed_type }}</span>
+            <span class="bed-status">{{ b.status }}</span>
+          </div>
+        } @empty {
+          <p class="empty">No beds configured for this ward.</p>
+        }
+      </div>
+    } @else {
+      <p class="empty">Select a ward to view beds.</p>
+    }
+  </div>
+</div>

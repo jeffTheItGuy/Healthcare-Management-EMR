@@ -1,0 +1,19 @@
+@if (staff) {
+  <div class="page-header-bar">
+    <h1>{{ staff.first_name }} {{ staff.last_name }}</h1>
+  </div>
+  <div class="card">
+    <div class="field-row"><label>Staff Number</label><span>{{ staff.staff_number }}</span></div>
+    <div class="field-row"><label>National ID</label><span>{{ staff.national_id }}</span></div>
+    <div class="field-row"><label>Role</label><span>{{ staff.role }}</span></div>
+    <div class="field-row"><label>Department</label><span>{{ staff.department_id || '-' }}</span></div>
+    <div class="field-row"><label>Specialization</label><span>{{ staff.specialization || '-' }}</span></div>
+    <div class="field-row"><label>License</label><span>{{ staff.license_number || '-' }}</span></div>
+    <div class="field-row"><label>Phone</label><span>{{ staff.phone || '-' }}</span></div>
+    <div class="field-row"><label>Email</label><span>{{ staff.email || '-' }}</span></div>
+  </div>
+} @else if (loading) {
+  <p class="empty">Loading...</p>
+} @else {
+  <p class="empty">Staff not found</p>
+}

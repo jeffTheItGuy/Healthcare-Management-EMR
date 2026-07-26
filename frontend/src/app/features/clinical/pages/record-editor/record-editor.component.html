@@ -1,0 +1,62 @@
+<div class="page-header-bar">
+  <h1>{{ recordId ? 'Edit Record' : 'New Medical Record' }}</h1>
+</div>
+
+<div class="card">
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Patient ID *</label>
+        <input formControlName="patient_id" />
+      </div>
+      <div class="form-group">
+        <label>Encounter Type *</label>
+        <select formControlName="encounter_type">
+          <option value="OPD">OPD</option>
+          <option value="IPD">IPD</option>
+          <option value="EMERGENCY">Emergency</option>
+          <option value="TELEMEDICINE">Telemedicine</option>
+        </select>
+      </div>
+      <div class="form-group full-width">
+        <label>Chief Complaint</label>
+        <textarea formControlName="chief_complaint" rows="2"></textarea>
+      </div>
+      <div class="form-group full-width">
+        <label>History of Present Illness</label>
+        <textarea formControlName="history_of_present_illness" rows="3"></textarea>
+      </div>
+      <div class="form-group full-width">
+        <label>Physical Examination</label>
+        <textarea formControlName="physical_examination" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Temperature (°C)</label>
+        <input formControlName="vital_signs.temperature" />
+      </div>
+      <div class="form-group">
+        <label>Blood Pressure</label>
+        <input formControlName="vital_signs.blood_pressure" placeholder="120/80" />
+      </div>
+      <div class="form-group">
+        <label>Pulse (bpm)</label>
+        <input formControlName="vital_signs.pulse" />
+      </div>
+      <div class="form-group">
+        <label>SpO2 (%)</label>
+        <input formControlName="vital_signs.spo2" />
+      </div>
+      <div class="form-group full-width">
+        <label>Assessment & Plan</label>
+        <textarea formControlName="assessment_and_plan" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-secondary" routerLink="/clinical/records">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        @if (loading) { Saving... } @else { Save Record }
+      </button>
+    </div>
+  </form>
+</div>
