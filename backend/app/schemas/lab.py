@@ -33,7 +33,7 @@ class LabOrderBase(BaseModel):
     order_number: str
     patient_id: UUID
     record_id: Optional[UUID] = None
-    ordered_by: Optional[UUID] = None
+    ordered_by: Optional[UUID] = None   # injected by router
     priority: str = "ROUTINE"
     status: str = "ORDERED"
     clinical_notes: Optional[str] = None

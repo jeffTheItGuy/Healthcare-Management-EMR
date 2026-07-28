@@ -31,9 +31,10 @@ def create_record(
     if not patient:
         raise ResourceNotFoundError(resource="Patient")
 
+    attending_id = current_user.staff_id if current_user.role == "DOCTOR" else req.attending_doctor_id
     record = MedicalRecord(
-        **req.model_dump(),
-        attending_doctor_id=current_user.staff_id if current_user.role == "DOCTOR" else req.attending_doctor_id,
+        **req.model_dump(exclude={"attending_doctor_id"}),
+        attending_doctor_id=attending_id,
     )
     db.add(record)
     db.commit()
@@ -67,7 +68,7 @@ def add_diagnosis(
         raise ValidationError(detail="Record is locked")
 
     diag = Diagnosis(
-        **req.model_dump(),
+        **req.model_dump(exclude={"diagnosed_by"}),
         record_id=record_id,
         diagnosed_by=current_user.staff_id,
     )
@@ -91,7 +92,7 @@ def add_prescription(
         raise ValidationError(detail="Record is locked")
 
     rx = Prescription(
-        **req.model_dump(),
+        **req.model_dump(exclude={"prescribed_by"}),
         record_id=record_id,
         prescribed_by=current_user.staff_id,
     )

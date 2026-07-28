@@ -59,7 +59,7 @@ def create_lab_order(
         raise ResourceNotFoundError(resource="Patient")
 
     order = LabOrder(
-        **req.model_dump(),
+        **req.model_dump(exclude={"ordered_by"}),
         ordered_by=current_user.staff_id,
     )
     db.add(order)
@@ -107,13 +107,12 @@ def add_lab_result(
         raise ResourceNotFoundError(resource="Lab order")
 
     result = LabResult(
-        **req.model_dump(),
+        **req.model_dump(exclude={"verified_by"}),
         verified_by=current_user.staff_id,
         verified_at=datetime.now(timezone.utc),
     )
     db.add(result)
 
-    # Update order item status if applicable
     item = (
         db.query(LabOrderItem)
         .filter(
