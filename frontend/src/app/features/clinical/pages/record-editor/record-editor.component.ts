@@ -39,7 +39,8 @@ export class RecordEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.recordId = this.route.snapshot.paramMap.get('id');
-    if (this.recordId) {
+    // Only fetch if editing an existing record, not when creating new
+    if (this.recordId && this.recordId !== 'new') {
       this.service.getRecord(this.recordId).subscribe(r => {
         this.form.patchValue({
           ...r,
@@ -53,7 +54,7 @@ export class RecordEditorComponent implements OnInit {
     if (this.form.invalid) return;
     this.loading = true;
     const value = this.form.value;
-    if (this.recordId) {
+    if (this.recordId && this.recordId !== 'new') {
       // update not implemented in service yet
       this.router.navigate(['/clinical/records', this.recordId]);
     } else {

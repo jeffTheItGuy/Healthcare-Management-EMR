@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey, JSON
+from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey, JSON, Integer, Numeric
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -63,9 +63,9 @@ class PrescriptionItem(Base):
     medication_id = Column(UUID(as_uuid=True), ForeignKey("medications.medication_id"))
     dosage = Column(String(100))
     frequency = Column(String(100))
-    duration_days = Column(String(20))
-    quantity_prescribed = Column(String(20))
-    quantity_dispensed = Column(String(20))
+    duration_days = Column(Integer)
+    quantity_prescribed = Column(Numeric(10, 2))
+    quantity_dispensed = Column(Numeric(10, 2))
     instructions = Column(Text)
     is_substitutable = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

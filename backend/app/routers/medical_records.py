@@ -1,5 +1,6 @@
 from typing import List, Optional
 from uuid import UUID
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -10,6 +11,7 @@ from app.core.security import doctor_or_nurse
 from app.core.exceptions import ResourceNotFoundError, ValidationError
 from app.models.medical import MedicalRecord, Diagnosis, Prescription, PrescriptionItem
 from app.models.patient import Patient
+from app.models.staff import Staff
 from app.schemas.medical import (
     MedicalRecordCreate, MedicalRecordRead,
     DiagnosisCreate, PrescriptionCreate, PrescriptionItemCreate,

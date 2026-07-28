@@ -1,6 +1,6 @@
 from typing import List, Optional
 from uuid import UUID
-from datetime import datetime
+from datetime import datetime, date
 
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
@@ -39,8 +39,8 @@ def create_appointment(
 @router.get("/", response_model=List[AppointmentRead])
 def list_appointments(
     patient_id: Optional[UUID] = None,
-    date_from: Optional[datetime] = None,
-    date_to: Optional[datetime] = None,
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
     status: Optional[str] = None,
     db: Session = Depends(get_db_with_rls),
     current_user: Staff = Depends(get_current_user),
@@ -49,12 +49,12 @@ def list_appointments(
     if patient_id:
         query = query.filter(Appointment.patient_id == patient_id)
     if date_from:
-        query = query.filter(Appointment.appointment_date >= date_from)
+        query = query.filter(Appointment.scheduled_date >= date_from)
     if date_to:
-        query = query.filter(Appointment.appointment_date <= date_to)
+        query = query.filter(Appointment.scheduled_date <= date_to)
     if status:
         query = query.filter(Appointment.status == status.upper())
-    return query.order_by(Appointment.appointment_date.desc()).limit(200).all()
+    return query.order_by(Appointment.scheduled_date.desc()).limit(200).all()
 
 
 @router.get("/{appointment_id}", response_model=AppointmentRead)

@@ -51,7 +51,7 @@ class DiagnosisCreate(DiagnosisBase):
 class PrescriptionBase(BaseModel):
     record_id: UUID
     patient_id: UUID
-    prescribed_by: UUID
+    prescribed_by: Optional[UUID] = None
     status: str = "PENDING"
     pharmacy_notes: Optional[str] = None
 

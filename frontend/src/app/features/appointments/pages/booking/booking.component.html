@@ -12,12 +12,28 @@
       <input formControlName="patient_id" />
     </div>
     <div class="form-group">
-      <label>Staff ID</label>
-      <input formControlName="staff_id" />
+      <label>Doctor ID</label>
+      <input formControlName="doctor_id" />
     </div>
     <div class="form-group">
-      <label>Appointment Date *</label>
-      <input type="datetime-local" formControlName="appointment_date" />
+      <label>Department ID</label>
+      <input formControlName="department_id" />
+    </div>
+    <div class="form-group">
+      <label>Appointment Number *</label>
+      <input formControlName="appointment_number" placeholder="APT-20240728-0001" />
+    </div>
+    <div class="form-group">
+      <label>Scheduled Date *</label>
+      <input type="date" formControlName="scheduled_date" />
+    </div>
+    <div class="form-group">
+      <label>Scheduled Time</label>
+      <input type="time" formControlName="scheduled_time" />
+    </div>
+    <div class="form-group">
+      <label>Duration (minutes)</label>
+      <input type="number" formControlName="estimated_duration_minutes" />
     </div>
     <div class="form-group">
       <label>Type *</label>
@@ -28,6 +44,10 @@
         <option value="PROCEDURE">Procedure</option>
         <option value="TELEMEDICINE">Telemedicine</option>
       </select>
+    </div>
+    <div class="form-group">
+      <label>Chief Complaint</label>
+      <textarea formControlName="chief_complaint" rows="2"></textarea>
     </div>
     <div class="form-group">
       <label>Notes</label>

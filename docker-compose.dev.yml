@@ -1,11 +1,11 @@
 version: "3.9"
 
 # ============================================================
-# ZIMBABWE HOSPITAL EMR — LOCAL DEVELOPMENT DOCKER COMPOSE
+# ZIMBABWE HOSPITAL EMR — DEVELOPMENT OVERRIDE
 # Usage:
-#   docker compose up --build
-#   docker compose -f docker-compose.yml up db -d   # DB only
-#   docker compose exec db psql -U zemr_admin -d zim_emr
+#   docker compose -f docker-compose.dev.yml up --build
+#   docker compose -f docker-compose.dev.yml exec backend python -c \
+#     "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 # ============================================================
 
 services:
@@ -42,7 +42,7 @@ services:
       -c log_destination=stderr
 
   # ----------------------------------------------------------
-  # pgAdmin (optional — comment out if not needed)
+  # pgAdmin (optional dev tool)
   # Access: http://localhost:5050
   # Login: admin@zimemr.co.zw / admin
   # ----------------------------------------------------------
@@ -63,8 +63,7 @@ services:
         condition: service_healthy
 
   # ----------------------------------------------------------
-  # Backend API (FastAPI + Uvicorn)
-  # Hot-reload enabled for development
+  # Backend API (FastAPI + Uvicorn with hot-reload)
   # ----------------------------------------------------------
   backend:
     build:
@@ -84,12 +83,13 @@ services:
       SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-480}
       EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-cpu}
+      HF_HOME: /root/.cache/huggingface
     volumes:
       - ./backend:/app:cached
       - ./uploads:/app/uploads
       - ./backups:/backups
-      # Persist Python packages between restarts
       - backend_venv:/app/.venv
+      - huggingface_cache:/root/.cache/huggingface
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     depends_on:
@@ -103,17 +103,16 @@ services:
       --reload-dir /app/app
 
   # ----------------------------------------------------------
-  # Frontend (Angular served via nginx)
+  # Frontend (Angular dev server)
   # ----------------------------------------------------------
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-      target: development
+      dockerfile: Dockerfile.dev
     container_name: zim-emr-web-dev
     restart: unless-stopped
     environment:
-      API_URL: http://backend:8000
+      API_URL: http://localhost:8000
     volumes:
       - ./frontend:/app:cached
       - /app/node_modules
@@ -121,74 +120,12 @@ services:
       - "${FRONTEND_PORT:-4200}:4200"
     depends_on:
       - backend
-    command: >
-      sh -c "npm install && ng serve --host 0.0.0.0 --port 4200 --poll 2000"
-
-  # ----------------------------------------------------------
-  # Redis (optional — for caching, Celery task queue, sessions)
-  # Uncomment if you add Celery workers or caching layer
-  # ----------------------------------------------------------
-  # redis:
-  #   image: redis:7-alpine
-  #   container_name: zim-emr-redis
-  #   restart: unless-stopped
-  #   ports:
-  #     - "${REDIS_PORT:-6379}:6379"
-  #   volumes:
-  #     - redis_data:/data
-  #   command: redis-server --appendonly yes
-
-  # ----------------------------------------------------------
-  # Celery Worker (optional — uncomment when ready)
-  # ----------------------------------------------------------
-  # celery_worker:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile.dev
-  #   container_name: zim-emr-celery-worker
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     POSTGRES_HOST: db
-  #     CELERY_BROKER_URL: redis://redis:6379/0
-  #     CELERY_RESULT_BACKEND: redis://redis:6379/0
-  #   volumes:
-  #     - ./backend:/app:cached
-  #     - ./uploads:/app/uploads
-  #   depends_on:
-  #     - db
-  #     - redis
-  #   command: celery -A app.celery worker --loglevel=info
-
-  # ----------------------------------------------------------
-  # Celery Beat (optional scheduler — uncomment when ready)
-  # ----------------------------------------------------------
-  # celery_beat:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile.dev
-  #   container_name: zim-emr-celery-beat
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     POSTGRES_HOST: db
-  #     CELERY_BROKER_URL: redis://redis:6379/0
-  #     CELERY_RESULT_BACKEND: redis://redis:6379/0
-  #   volumes:
-  #     - ./backend:/app:cached
-  #     - ./uploads:/app/uploads
-  #   depends_on:
-  #     - db
-  #     - redis
-  #   command: celery -A app.celery beat --loglevel=info
 
 volumes:
   postgres_data:
   pgadmin_data:
   backend_venv:
-  # redis_data:
+  huggingface_cache:
 
 networks:
   default:

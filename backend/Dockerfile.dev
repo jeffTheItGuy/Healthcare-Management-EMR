@@ -1,23 +1,26 @@
-# ZIMEMR BACKEND — DEVELOPMENT Dockerfile
-# Hot-reload enabled. Source code mounted via volume.
-
 FROM python:3.12-slim
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
+# System dependencies for psycopg2, numpy, sentence-transformers, etc.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
+    build-essential libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt pyproject.toml ./
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+# Pre-create HuggingFace cache directory
+RUN mkdir -p /root/.cache/huggingface
 
-# Do NOT copy app/ — source is mounted via docker-compose volume
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code (overridden by bind-mount in dev, but useful for first build)
+COPY . .
+
+ENV PYTHONPATH=/app
+ENV HF_HOME=/root/.cache/huggingface
+
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Default for dev; docker-compose.yml overrides this with --reload
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

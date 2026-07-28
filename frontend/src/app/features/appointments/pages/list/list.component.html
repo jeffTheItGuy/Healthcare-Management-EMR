@@ -22,15 +22,23 @@
   } @else {
     <table class="data-table">
       <thead>
-        <tr><th>Date</th><th>Type</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Chief Complaint</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
         @for (a of appointments; track a.appointment_id) {
           <tr>
-            <td>{{ a.appointment_date | dateFormat:'medium' }}</td>
+            <td>{{ a.scheduled_date | dateFormat:'short' }}</td>
+            <td>{{ a.scheduled_time || '-' }}</td>
             <td>{{ a.appointment_type }}</td>
             <td><span class="badge" [class]="a.status | statusBadge">{{ a.status }}</span></td>
-            <td>{{ a.notes || '-' }}</td>
+            <td>{{ a.chief_complaint || '-' }}</td>
             <td>
               @if (a.status !== 'CANCELLED' && a.status !== 'COMPLETED') {
                 <button class="link" (click)="cancel(a.appointment_id)">Cancel</button>

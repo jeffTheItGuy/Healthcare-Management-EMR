@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey, UniqueConstraint, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -13,8 +13,8 @@ class Ward(Base):
     ward_name = Column(String(100), nullable=False)
     department_id = Column(UUID(as_uuid=True), ForeignKey("departments.department_id"))
     ward_type = Column(String(50), nullable=False)
-    floor_level = Column(String(20))
-    capacity = Column(String(20))
+    floor_level = Column(Integer)
+    capacity = Column(Integer)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 

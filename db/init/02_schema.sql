@@ -489,3 +489,19 @@ CREATE TABLE search_queries (
     execution_time_ms INT,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- ===== STAFF ROSTERS =====
+CREATE TABLE staff_rosters (
+    roster_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    staff_id UUID REFERENCES staff(staff_id) NOT NULL,
+    department_id UUID REFERENCES departments(department_id),
+    roster_date DATE NOT NULL,
+    shift_type VARCHAR(20) NOT NULL,
+    start_time VARCHAR(8),
+    end_time VARCHAR(8),
+    ward_id UUID REFERENCES wards(ward_id),
+    notes TEXT,
+    created_by UUID,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(staff_id, roster_date, shift_type)
+);

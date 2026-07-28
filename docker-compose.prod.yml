@@ -28,9 +28,12 @@ services:
     container_name: zim-emr-api
     restart: always
     env_file: .env
+    environment:
+      - HF_HOME=/root/.cache/huggingface   # <-- pins cache location
     volumes:
       - ./uploads:/app/uploads
       - ./backups:/backups
+      - huggingface_cache:/root/.cache/huggingface   # <-- persists model downloads
     expose:
       - "8000"
     depends_on:
@@ -58,3 +61,4 @@ services:
 
 volumes:
   postgres_data:
+  huggingface_cache:  

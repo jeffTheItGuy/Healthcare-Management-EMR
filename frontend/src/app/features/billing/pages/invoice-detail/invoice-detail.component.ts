@@ -5,11 +5,12 @@ import { BillingService } from '../../../../core/services/billing.service';
 import { BillingInvoice } from '../../../../core/models/billing.model';
 import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format.pipe';
+import { StatusBadgePipe } from '../../../../shared/pipes/status-badge.pipe';
 
 @Component({
   selector: 'app-invoice-detail',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, DateFormatPipe],
+  imports: [CommonModule, CurrencyPipe, DateFormatPipe, StatusBadgePipe],
   templateUrl: './invoice-detail.component.html',
   styleUrl: './invoice-detail.component.scss'
 })

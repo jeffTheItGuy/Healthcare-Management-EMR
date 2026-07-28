@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from uuid import UUID
 
@@ -63,16 +63,15 @@ def login(req: LoginRequest, request: Request, db: Session = Depends(get_db)):
         )
 
     if not verify_password(req.password, cred.password_hash):
-        # Increment failed attempts
-        attempts = int(cred.failed_login_attempts or "0") + 1
-        cred.failed_login_attempts = str(attempts)
+        attempts = (cred.failed_login_attempts or 0) + 1
+        cred.failed_login_attempts = attempts
         if attempts >= 5:
             cred.locked_until = datetime.now(timezone.utc) + timedelta(minutes=30)
         db.commit()
         raise AuthenticationError(detail="Invalid username or password")
 
     # Success: reset attempts
-    cred.failed_login_attempts = "0"
+    cred.failed_login_attempts = 0
     cred.locked_until = None
     cred.last_login_at = datetime.now(timezone.utc)
     db.commit()

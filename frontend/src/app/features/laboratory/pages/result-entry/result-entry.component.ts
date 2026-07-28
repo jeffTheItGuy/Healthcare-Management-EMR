@@ -24,7 +24,9 @@ export class ResultEntryComponent implements OnInit {
   error = '';
 
   form = this.fb.group({
+    order_item_id: ['', Validators.required],
     test_id: ['', Validators.required],
+    patient_id: ['', Validators.required],
     result_value: ['', Validators.required],
     result_numeric: [''],
     unit_of_measure: [''],
@@ -46,10 +48,16 @@ export class ResultEntryComponent implements OnInit {
   onSubmit(): void {
     if (this.form.invalid) return;
     this.loading = true;
-    const value = { ...this.form.value, patient_id: '' } as any;
-    this.service.addResult(this.orderId, value).subscribe({
-      next: () => { this.loadResults(); this.form.reset({ interpretation: 'NORMAL', is_critical: false }); this.loading = false; },
-      error: (err) => { this.error = err.error?.detail || 'Failed'; this.loading = false; }
+    this.service.addResult(this.orderId, this.form.value as any).subscribe({
+      next: () => {
+        this.loadResults();
+        this.form.reset({ interpretation: 'NORMAL', is_critical: false });
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = err.error?.detail || 'Failed to save result';
+        this.loading = false;
+      }
     });
   }
 }

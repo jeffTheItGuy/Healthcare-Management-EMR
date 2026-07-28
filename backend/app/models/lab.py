@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey
+from sqlalchemy import Column, String, Text, DateTime, Boolean, ForeignKey, Integer, Numeric
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -14,10 +14,10 @@ class LabTestCatalog(Base):
     category = Column(String(100))
     description = Column(Text)
     sample_type = Column(String(50))
-    turnaround_hours = Column(String(20))
+    turnaround_hours = Column(Integer)
     normal_range = Column(Text)
     unit_of_measure = Column(String(20))
-    base_price = Column(String(20))
+    base_price = Column(Numeric(18, 2))
     currency_code = Column(String(3), default="USD")
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

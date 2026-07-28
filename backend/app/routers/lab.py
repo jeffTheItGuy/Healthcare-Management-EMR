@@ -7,10 +7,11 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.dependencies import get_db_with_rls, get_current_user
-from app.core.security import doctor_or_nurse, lab_tech_only
+from app.core.security import doctor_or_nurse, lab_tech_only, require_role
 from app.core.exceptions import ResourceNotFoundError, ValidationError
 from app.models.lab import LabTestCatalog, LabOrder, LabOrderItem, LabResult
 from app.models.patient import Patient
+from app.models.staff import Staff
 from app.schemas.lab import (
     LabTestCatalogCreate, LabTestCatalogRead,
     LabOrderCreate, LabOrderRead,

@@ -11,6 +11,7 @@ from app.core.security import doctor_or_nurse, require_role
 from app.core.exceptions import ResourceNotFoundError, ValidationError
 from app.models.admissions import Ward, Bed, Admission
 from app.models.patient import Patient
+from app.models.staff import Staff
 from app.schemas.admissions import (
     WardCreate, WardRead, BedCreate, BedRead,
     AdmissionCreate, AdmissionRead, AdmissionUpdate,

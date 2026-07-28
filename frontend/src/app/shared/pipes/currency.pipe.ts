@@ -9,6 +9,9 @@ export class CurrencyPipe implements PipeTransform {
   constructor(private service: CurrencyService) {}
 
   transform(value: string | number | null, currencyCode: string = 'USD'): string {
+    if (value === null || value === undefined) {
+      return '-';
+    }
     return this.service.format(value, currencyCode as any);
   }
 }

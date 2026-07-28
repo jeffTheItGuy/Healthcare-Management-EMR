@@ -18,9 +18,14 @@ export class BookingComponent {
 
   form = this.fb.group({
     patient_id: ['', Validators.required],
-    staff_id: [''],
-    appointment_date: ['', Validators.required],
+    doctor_id: [''],
+    department_id: [''],
+    appointment_number: ['', Validators.required],
+    scheduled_date: ['', Validators.required],
+    scheduled_time: [''],
+    estimated_duration_minutes: [null as number | null],
     appointment_type: ['OPD_CONSULTATION', Validators.required],
+    chief_complaint: [''],
     notes: ['']
   });
 
@@ -30,7 +35,18 @@ export class BookingComponent {
   onSubmit(): void {
     if (this.form.invalid) return;
     this.loading = true;
-    this.service.create(this.form.value as any).subscribe({
+
+    const value = this.form.value as any;
+
+    // Auto-generate appointment number if left empty
+    if (!value.appointment_number) {
+      const now = new Date();
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      const random = Math.floor(1000 + Math.random() * 9000);
+      value.appointment_number = `APT-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${random}`;
+    }
+
+    this.service.create(value).subscribe({
       next: () => this.router.navigate(['/appointments']),
       error: (err) => { this.error = err.error?.detail || 'Booking failed'; this.loading = false; }
     });

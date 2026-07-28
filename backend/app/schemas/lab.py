@@ -33,7 +33,7 @@ class LabOrderBase(BaseModel):
     order_number: str
     patient_id: UUID
     record_id: Optional[UUID] = None
-    ordered_by: UUID
+    ordered_by: Optional[UUID] = None
     priority: str = "ROUTINE"
     status: str = "ORDERED"
     clinical_notes: Optional[str] = None

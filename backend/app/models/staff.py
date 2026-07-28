@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Date, DateTime, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, String, Text, Date, DateTime, Boolean, ForeignKey, UniqueConstraint, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -45,7 +45,7 @@ class StaffCredential(Base):
     mfa_enabled = Column(Boolean, default=False)
     last_login_at = Column(DateTime(timezone=True))
     password_changed_at = Column(DateTime(timezone=True))
-    failed_login_attempts = Column(String(20), default="0")
+    failed_login_attempts = Column(Integer, default=0)
     locked_until = Column(DateTime(timezone=True))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 

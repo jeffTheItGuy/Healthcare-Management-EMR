@@ -10,6 +10,7 @@ from app.core.security import cashier_or_admin, require_role
 from app.core.exceptions import ResourceNotFoundError, ValidationError
 from app.models.billing import BillingInvoice, InvoiceItem, Payment, MedicalAidProvider
 from app.models.patient import Patient
+from app.models.staff import Staff
 from app.schemas.billing import (
     BillingInvoiceCreate, BillingInvoiceRead,
     InvoiceItemCreate, PaymentCreate, PaymentRead,

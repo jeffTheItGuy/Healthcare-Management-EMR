@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, Date, DateTime, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, String, Text, Date, DateTime, Boolean, ForeignKey, UniqueConstraint, Integer, Numeric
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -15,8 +15,8 @@ class Medication(Base):
     strength = Column(String(50))
     atc_code = Column(String(10))
     category = Column(String(100))
-    reorder_level = Column(String(20))
-    reorder_quantity = Column(String(20))
+    reorder_level = Column(Integer)
+    reorder_quantity = Column(Integer)
     is_controlled = Column(Boolean, default=False)
     schedule = Column(String(20))
     is_active = Column(Boolean, default=True)
@@ -28,10 +28,10 @@ class PharmacyInventory(Base):
 
     inventory_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     medication_id = Column(UUID(as_uuid=True), ForeignKey("medications.medication_id"))
-    total_quantity = Column(String(20), default="0")
-    available_quantity = Column(String(20), default="0")
-    reserved_quantity = Column(String(20), default="0")
-    unit_cost_average = Column(String(20))
+    total_quantity = Column(Integer, default=0)
+    available_quantity = Column(Integer, default=0)
+    reserved_quantity = Column(Integer, default=0)
+    unit_cost_average = Column(Numeric(18, 4))
     currency_code = Column(String(3), default="USD")
     location_rack = Column(String(50))
     is_active = Column(Boolean, default=True)
@@ -62,9 +62,9 @@ class PharmacyBatch(Base):
     medication_id = Column(UUID(as_uuid=True), ForeignKey("medications.medication_id"), nullable=False)
     batch_number = Column(String(50), nullable=False)
     supplier_id = Column(UUID(as_uuid=True), ForeignKey("suppliers.supplier_id"))
-    quantity_received = Column(String(20))
-    quantity_remaining = Column(String(20))
-    unit_cost = Column(String(20))
+    quantity_received = Column(Integer)
+    quantity_remaining = Column(Integer)
+    unit_cost = Column(Numeric(18, 4))
     currency_code = Column(String(3), default="USD")
     expiry_date = Column(Date)
     manufacturing_date = Column(Date)
@@ -82,9 +82,9 @@ class DispensedMedication(Base):
     batch_id = Column(UUID(as_uuid=True), ForeignKey("pharmacy_batches.batch_id"))
     patient_id = Column(UUID(as_uuid=True), ForeignKey("patients.patient_id"))
     dispensed_by = Column(UUID(as_uuid=True), ForeignKey("staff.staff_id"))
-    quantity_dispensed = Column(String(20))
-    unit_price = Column(String(20))
+    quantity_dispensed = Column(Integer)
+    unit_price = Column(Numeric(18, 4))
     currency_code = Column(String(3), default="USD")
-    total_amount = Column(String(20))
+    total_amount = Column(Numeric(18, 2))
     dispense_date = Column(DateTime(timezone=True), server_default=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
