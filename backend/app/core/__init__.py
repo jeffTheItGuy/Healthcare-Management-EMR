@@ -9,7 +9,7 @@ from .security import (
 )
 from .rls import set_staff_rls_context, set_patient_rls_context
 from .exceptions import (
-    ZimEMRException,
+    EMRException,
     AuthenticationError,
     AuthorizationError,
     ResourceNotFoundError,
@@ -26,7 +26,7 @@ __all__ = [
     "require_role",
     "set_staff_rls_context",
     "set_patient_rls_context",
-    "ZimEMRException",
+    "EMRException",
     "AuthenticationError",
     "AuthorizationError",
     "ResourceNotFoundError",

@@ -2,7 +2,7 @@
 """
 One-off script to ingest PDFs into pgvector.
 Usage:
-    python scripts/embed_documents.py --file guidelines/mohcc_malaria.pdf --type GUIDELINE
+    python scripts/embed_documents.py --file guidelines/malaria.pdf --type GUIDELINE
 """
 import argparse
 import hashlib

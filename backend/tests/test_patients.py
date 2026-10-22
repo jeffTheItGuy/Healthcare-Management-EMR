@@ -8,7 +8,7 @@ def test_create_patient(client, auth_headers):
         "last_name": "Doe",
         "date_of_birth": "1990-01-01",
         "gender": "MALE",
-        "phone_primary": "0771234567",
+        "phone_primary": "5550001",
     }
     response = client.post("/patients/", json=payload, headers=auth_headers)
     assert response.status_code == 201

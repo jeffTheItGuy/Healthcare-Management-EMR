@@ -1,5 +1,5 @@
 -- ============================================================
--- ZIMBABWE HOSPITAL EMR — PGVECTOR HELPER FUNCTIONS & CONFIG
+-- EMR — PGVECTOR HELPER FUNCTIONS & CONFIG
 -- Run after 04_indexes.sql (or any time after pgvector is ready)
 -- ============================================================
 

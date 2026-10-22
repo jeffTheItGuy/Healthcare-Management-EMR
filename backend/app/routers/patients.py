@@ -17,7 +17,7 @@ from app.schemas.patient import (
     PatientConsentCreate, PatientConsentRead,
 )
 from app.services.audit_service import log_audit_event
-from app.utils.validators import validate_phone_zw, validate_zimbabwe_national_id
+from app.utils.validators import validate_phone, validate_national_id
 
 router = APIRouter()
 
@@ -40,9 +40,9 @@ def create_patient(
     db: Session = Depends(get_db_with_rls),
     current_user: Staff = Depends(doctor_or_nurse),
 ):
-    if req.national_id and not validate_zimbabwe_national_id(req.national_id):
+    if req.national_id and not validate_national_id(req.national_id):
         raise ValidationError(detail="Invalid national ID format")
-    if not validate_phone_zw(req.phone_primary):
+    if not validate_phone(req.phone_primary):
         raise ValidationError(detail="Invalid primary phone number")
 
     existing = db.query(Patient).filter(

@@ -45,6 +45,7 @@ frontend/yarn-error.log*
 *.env
 !.env.example
 docker-compose.override.yml
+script.sh
 
 # Database
 db-data/

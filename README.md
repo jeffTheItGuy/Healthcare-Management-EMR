@@ -1,6 +1,6 @@
-# ZimEMR — Zimbabwe Hospital Management System
+# EMR — Hospital Management System
 
-A production-ready Electronic Medical Records (EMR) system built for Zimbabwean healthcare facilities. Features multi-currency billing (USD/ZiG), batch-tracked pharmacy inventory, critical lab alerting, and local semantic search via pgvector — no cloud AI required.
+A production-ready Electronic Medical Records (EMR) system built for healthcare facilities. Features multi-currency billing, batch-tracked pharmacy inventory, critical lab alerting, and local semantic search via pgvector — no cloud AI required.
 
 ## Stack
 
@@ -16,7 +16,7 @@ A production-ready Electronic Medical Records (EMR) system built for Zimbabwean 
 
 ```bash
 # 1. Clone
-git clone https://github.com/yourorg/zim-emr.git && cd zim-emr
+git clone https://github.com/yourorg/emr.git && cd emr
 
 # 2. Environment
 cp .env.example .env
@@ -28,3 +28,4 @@ docker compose up --build
 # 4. Access
 # API Docs:  http://localhost:8000/docs
 # Frontend: http://localhost:4200
+```

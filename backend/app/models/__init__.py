@@ -1,4 +1,4 @@
-"""SQLAlchemy models for ZimEMR."""
+"""SQLAlchemy models."""
 from app.database import Base
 
 from .patient import Patient, PatientConsent, PatientAccessLog

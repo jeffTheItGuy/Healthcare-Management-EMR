@@ -2,9 +2,9 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 
 class Settings(BaseSettings):
-    POSTGRES_USER: str = "zemr_admin"
+    POSTGRES_USER: str = "emr_admin"
     POSTGRES_PASSWORD: str = "changeme"
-    POSTGRES_DB: str = "zim_emr"
+    POSTGRES_DB: str = "emr"
     POSTGRES_HOST: str = "db"
     POSTGRES_PORT: int = 5432
 

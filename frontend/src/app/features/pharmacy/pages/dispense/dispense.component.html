@@ -10,7 +10,15 @@
     <div class="form-group"><label>Patient ID *</label><input formControlName="patient_id" /></div>
     <div class="form-group"><label>Quantity *</label><input formControlName="quantity_dispensed" /></div>
     <div class="form-group"><label>Unit Price</label><input formControlName="unit_price" /></div>
-    <div class="form-group"><label>Currency</label><select formControlName="currency_code"><option value="USD">USD</option><option value="ZiG">ZiG</option></select></div>
+    <div class="form-group">
+      <label>Currency</label>
+      <select formControlName="currency_code">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="ZAR">ZAR</option>
+      </select>
+    </div>
     <div class="actions">
       <button type="button" class="btn btn-secondary" routerLink="/pharmacy/inventory">Cancel</button>
       <button type="submit" class="btn btn-primary" [disabled]="loading">

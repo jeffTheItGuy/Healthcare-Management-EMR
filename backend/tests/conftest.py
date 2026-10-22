@@ -67,7 +67,7 @@ def test_department(db):
 def test_staff(db, test_department):
     staff = Staff(
         staff_number="S-001",
-        national_id="63-1234567-A-12",
+        national_id="NAT-0001",
         first_name="Test",
         last_name="Doctor",
         role="DOCTOR",

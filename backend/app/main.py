@@ -5,14 +5,14 @@ from app.routers import auth, patients, appointments, medical_records, admission
 from app.routers import lab, pharmacy, billing, staff, search
 
 app = FastAPI(
-    title="ZimEMR API",
-    description="Zimbabwe Hospital Management System",
+    title="EMR API",
+    description="Hospital Management System",
     version="0.1.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "https://yourdomain.co.zw"],
+    allow_origins=["http://localhost:4200", "https://yourdomain.example"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,4 +31,4 @@ app.include_router(search.router, prefix="/search", tags=["Semantic Search"])
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "region": "ZW"}
+    return {"status": "ok"}

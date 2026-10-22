@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.zimemr.co.zw'
+  apiUrl: 'https://api.example.com'
 };

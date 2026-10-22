@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ZimEMR Database Seeder
+Database Seeder
 Usage:
     docker compose -f docker-compose.dev.yml exec backend python scripts/seed_data.py
 """
@@ -51,17 +51,17 @@ def seed_medical_aid_providers(db: Session):
 
     providers = [
         MedicalAidProvider(
-            provider_code="CIMAS",
-            provider_name="CIMAS Medical Aid",
+            provider_code="PROV_A",
+            provider_name="PROV_A Medical Aid",
             contact_phone="0242-308500",
-            contact_email="claims@cimas.co.zw",
+            contact_email="claims@provider-a.example.com",
             is_active=True,
         ),
         MedicalAidProvider(
-            provider_code="PSMAS",
-            provider_name="PSMAS",
+            provider_code="PROV_B",
+            provider_name="PROV_B",
             contact_phone="0242-700011",
-            contact_email="claims@psmas.co.zw",
+            contact_email="claims@provider-b.example.com",
             is_active=True,
         ),
     ]
@@ -88,7 +88,7 @@ def seed_staff(db: Session):
             last_name="Administrator",
             role="ADMIN",
             department_id=admin_dept.department_id,
-            email="admin@zimemr.co.zw",
+            email="admin@example.com",
             is_active=True,
         ),
         Staff(
@@ -101,7 +101,7 @@ def seed_staff(db: Session):
             specialization="Emergency Medicine",
             license_number="MDZ-2015-0042",
             phone="0772123456",
-            email="t.moyo@zimemr.co.zw",
+            email="t.moyo@example.com",
             is_active=True,
         ),
         Staff(
@@ -113,7 +113,7 @@ def seed_staff(db: Session):
             department_id=emrg_dept.department_id,
             license_number="RNZ-2018-0091",
             phone="0772987654",
-            email="g.mutasa@zimemr.co.zw",
+            email="g.mutasa@example.com",
             is_active=True,
         ),
         Staff(
@@ -227,7 +227,7 @@ def seed_medications(db: Session):
         ))
     db.add_all(invs)
 
-    supplier = Supplier(supplier_code="SUP-001", supplier_name="Varun Pharmaceuticals", contact_person="Mr. Patel", phone="0242-123456", is_active=True)
+    supplier = Supplier(supplier_code="SUP-001", supplier_name="Generic Pharmaceuticals", contact_person="Mr. Patel", phone="0242-123456", is_active=True)
     db.add(supplier)
     db.flush()
 
@@ -274,7 +274,7 @@ def seed_patients(db: Session):
         print("  Patients already seeded.")
         return
 
-    cimas = db.query(MedicalAidProvider).filter_by(provider_code="CIMAS").first()
+    cimas = db.query(MedicalAidProvider).filter_by(provider_code="PROV_A").first()
 
     patients = [
         Patient(
@@ -287,14 +287,14 @@ def seed_patients(db: Session):
             blood_group="O+",
             phone_primary="0771234567",
             phone_secondary="0712345678",
-            email="john.doe@email.co.zw",
+            email="john.doe@example.com",
             address="12 Main Street",
-            city="Harare",
-            suburb="Avondale",
+            city="City A",
+            suburb="Suburb A",
             emergency_contact_name="Jane Doe",
             emergency_contact_phone="0779876543",
             medical_aid_provider_id=cimas.provider_id if cimas else None,
-            medical_aid_number="CIMAS-001234",
+            medical_aid_number="PROV_A-001234",
             allergies="Penicillin",
             is_active=True,
         ),
@@ -307,8 +307,8 @@ def seed_patients(db: Session):
             gender="FEMALE",
             blood_group="A+",
             phone_primary="0774567890",
-            city="Bulawayo",
-            suburb="Nkulumane",
+            city="City B",
+            suburb="Suburb B",
             emergency_contact_name="Tendai Mupfumi",
             emergency_contact_phone="0771122334",
             is_active=True,
@@ -321,8 +321,8 @@ def seed_patients(db: Session):
             date_of_birth=date(1978, 3, 10),
             gender="MALE",
             phone_primary="0775566778",
-            city="Harare",
-            suburb="Highlands",
+            city="City A",
+            suburb="Suburb C",
             chronic_conditions="Hypertension, Type 2 Diabetes",
             is_active=True,
         ),
@@ -523,7 +523,7 @@ def seed_billing(db: Session):
 
 
 def main():
-    print("🌱 Seeding ZimEMR database...")
+    print("🌱 Seeding database...")
     db = SessionLocal()
     try:
         seed_departments(db)

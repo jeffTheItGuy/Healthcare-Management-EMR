@@ -1,5 +1,5 @@
 -- ============================================================
--- ZIMBABWE HOSPITAL EMR — CORE SCHEMA
+-- EMR — CORE SCHEMA
 -- Run after 01_extensions.sql
 -- ============================================================
 
@@ -406,7 +406,7 @@ CREATE TABLE payments (
     payment_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     invoice_id UUID REFERENCES billing_invoices(invoice_id),
     patient_id UUID REFERENCES patients(patient_id),
-    payment_method VARCHAR(50) NOT NULL CHECK (payment_method IN ('CASH','ECOCASH','ZIPIT','BANK_TRANSFER','CARD','USD_CASH','ZiG_CASH','MEDICAL_AID')),
+    payment_method VARCHAR(50) NOT NULL CHECK (payment_method IN ('CASH','CARD','BANK_TRANSFER','MOBILE_MONEY','INSURANCE','MEDICAL_AID')),
     currency_code CHAR(3) DEFAULT 'USD',
     amount DECIMAL(18,2) NOT NULL,
     exchange_rate DECIMAL(24,10) DEFAULT 1.0,

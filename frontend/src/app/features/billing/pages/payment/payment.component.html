@@ -11,17 +11,23 @@
       <label>Method *</label>
       <select formControlName="payment_method">
         <option value="CASH">Cash</option>
-        <option value="ECOCASH">EcoCash</option>
-        <option value="ZIPIT">ZIPIT</option>
-        <option value="BANK_TRANSFER">Bank Transfer</option>
         <option value="CARD">Card</option>
-        <option value="USD_CASH">USD Cash</option>
-        <option value="ZiG_CASH">ZiG Cash</option>
+        <option value="BANK_TRANSFER">Bank Transfer</option>
+        <option value="MOBILE_MONEY">Mobile Money</option>
+        <option value="INSURANCE">Insurance</option>
         <option value="MEDICAL_AID">Medical Aid</option>
       </select>
     </div>
     <div class="form-group"><label>Amount *</label><input formControlName="amount" type="number" /></div>
-    <div class="form-group"><label>Currency</label><select formControlName="currency_code"><option value="USD">USD</option><option value="ZiG">ZiG</option></select></div>
+    <div class="form-group">
+      <label>Currency</label>
+      <select formControlName="currency_code">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="ZAR">ZAR</option>
+      </select>
+    </div>
     <div class="form-group"><label>Reference #</label><input formControlName="reference_number" /></div>
     <div class="actions">
       <button type="button" class="btn btn-secondary" routerLink="/billing/invoices">Cancel</button>

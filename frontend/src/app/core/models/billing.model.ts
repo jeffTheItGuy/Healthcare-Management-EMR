@@ -96,7 +96,7 @@ export interface Payment {
   payment_id: string;
   invoice_id: string;
   patient_id: string;
-  payment_method: 'CASH' | 'ECOCASH' | 'ZIPIT' | 'BANK_TRANSFER' | 'CARD' | 'USD_CASH' | 'ZiG_CASH' | 'MEDICAL_AID';
+  payment_method: 'CASH' | 'CARD' | 'BANK_TRANSFER' | 'MOBILE_MONEY' | 'INSURANCE' | 'MEDICAL_AID';
   currency_code: string;
   amount: string;
   exchange_rate: string;

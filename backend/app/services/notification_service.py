@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def notify_critical_lab_result(db: Session, result: LabResult) -> None:
     """
     Trigger notification for critical lab results.
-    In production: integrate with SMS gateway (Twilio, Africa's Talking, local SMS API)
+    In production: integrate with SMS gateway (Twilio or a local SMS API)
     or hospital paging system.
     """
     if not result.is_critical:
@@ -34,9 +34,9 @@ def notify_critical_lab_result(db: Session, result: LabResult) -> None:
     )
 
     # Placeholder for actual SMS/email integration
-    # In Zimbabwe, you might use:
-    # - Africa's Talking SMS API
-    # - Econet/NetOne bulk SMS gateway
+    # In production, you might integrate with:
+    # - Twilio SMS API
+    # - A bulk SMS gateway
     # - Hospital internal paging system
     
     logger.warning(f"CRITICAL ALERT: {message}")

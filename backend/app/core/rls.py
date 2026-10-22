@@ -1,6 +1,6 @@
 """PostgreSQL Row Level Security context helpers.
 
-RLS policies in ZimEMR rely on session-level variables set per request.
+RLS policies in the application rely on session-level variables set per request.
 Before executing queries on RLS-protected tables, call these setters.
 """
 from uuid import UUID

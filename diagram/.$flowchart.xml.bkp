@@ -1,0 +1,190 @@
+<mxfile host="Electron">
+  <diagram name="ZimEMR Flow" id="zim-emr-flow">
+    <mxGraphModel dx="471" dy="285" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="net" parent="1" style="swimlane;collapsible=0;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="docker compose network — -emr-network" vertex="1">
+          <mxGeometry height="1420" width="1720" x="20" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=umlActor;html=1;fillColor=#F1F1F1;strokeColor=#181818;" value="" vertex="1">
+          <mxGeometry height="54" width="40" x="850" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="actorLbl" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="USER&#xa;DOCTOR · NURSE · LAB_TECH · PHARMACIST · CASHIER · ADMIN" vertex="1">
+          <mxGeometry height="30" width="260" x="740" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="fe" parent="1" style="swimlane;collapsible=0;startSize=49;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" value="frontend container&#xa;Angular 18 + Angular Material + RxJS&#xa;nginx :80  (dev: ng serve :4200)" vertex="1">
+          <mxGeometry height="440" width="960" x="60" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="nNginx" parent="fe" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="nginx&#xa;/ → dist/-emr/browser&#xa;/api/ → proxy_pass" vertex="1">
+          <mxGeometry height="90" width="220" x="700" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="nAuth" parent="fe" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="AuthService / Interceptor&#xa;JWT in localStorage" vertex="1">
+          <mxGeometry height="62" width="210" x="450" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="nLogin" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="Login View&#xa;username + password → JWT" vertex="1">
+          <mxGeometry height="62" width="230" x="90" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="nViews" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="Dashboard · Patients · Records&#xa;Appointments · Admissions&#xa;Lab · Pharmacy · Billing · Search" vertex="1">
+          <mxGeometry height="86" width="230" x="90" y="372" as="geometry" />
+        </mxCell>
+        <mxCell id="nApi" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="HttpClient (RxJS)&#xa;baseURL /api + Bearer JWT" vertex="1">
+          <mxGeometry height="62" width="210" x="370" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="nLogin" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="nAuth" value="POST /auth/login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="nViews" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="nApi" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="nAuth" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="nApi" value="Bearer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="nApi" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="nNginx" value="/api/*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="actor" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="nNginx" value="HTTP :80">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be" parent="1" style="swimlane;collapsible=0;startSize=54;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" value="backend container&#xa;FastAPI + Uvicorn (Python 3.12)&#xa;:8000 · JWT Bearer auth · Alembic migrations" vertex="1">
+          <mxGeometry height="549" width="1640" x="60" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="sEmb" parent="be" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="embedding_service&#xa;all-MiniLM-L6-v2 · 384-dim" vertex="1">
+          <mxGeometry height="49" width="220" x="50" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="ctrl" parent="1" style="swimlane;collapsible=0;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="Routers (FastAPI APIRouter)" vertex="1">
+          <mxGeometry height="200" width="1580" x="90" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="rAuth" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="auth&#xa;POST /auth/login · /auth/me" vertex="1">
+          <mxGeometry height="62" width="200" x="110" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="rPatients" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="patients&#xa;CRUD · consents · search" vertex="1">
+          <mxGeometry height="62" width="200" x="330" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="rAppts" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="appointments&#xa;schedule · cancel" vertex="1">
+          <mxGeometry height="62" width="200" x="550" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="rRecords" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="records&#xa;encounters · dx · Rx · lock" vertex="1">
+          <mxGeometry height="62" width="200" x="770" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="rAdm" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="admissions&#xa;wards · beds · discharge" vertex="1">
+          <mxGeometry height="62" width="200" x="990" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="rLab" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="lab&#xa;catalog · orders · results" vertex="1">
+          <mxGeometry height="62" width="200" x="110" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="rPharm" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="pharmacy&#xa;inventory · batches · dispense" vertex="1">
+          <mxGeometry height="62" width="200" x="330" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="rBilling" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="billing&#xa;invoices · items · payments" vertex="1">
+          <mxGeometry height="62" width="200" x="550" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="rStaff" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="staff&#xa;departments · roster" vertex="1">
+          <mxGeometry height="62" width="200" x="770" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="rSearch" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="search&#xa;semantic (pgvector)" vertex="1">
+          <mxGeometry height="62" width="200" x="990" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="swimlane;collapsible=0;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="Core &amp; Services" vertex="1">
+          <mxGeometry height="210" width="1180" x="90" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="sSec" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="security&#xa;bcrypt · JWT HS256 · RBAC require_role" vertex="1">
+          <mxGeometry height="49" width="220" x="110" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="sRls" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="RLS context&#xa;SET LOCAL app.current_staff_id" vertex="1">
+          <mxGeometry height="49" width="220" x="110" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="sAudit" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="audit_service&#xa;log_audit_event()" vertex="1">
+          <mxGeometry height="49" width="220" x="350" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="sBill" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="billing_service&#xa;USD / ZiG multi-currency" vertex="1">
+          <mxGeometry height="49" width="220" x="590" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="sNotif" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="notification_service&#xa;critical lab alerts" vertex="1">
+          <mxGeometry height="49" width="220" x="590" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="sVal" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="validators&#xa;ZW national ID · phone 07x" vertex="1">
+          <mxGeometry height="49" width="210" x="830" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="sCur" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="currency utils&#xa;Ecocash · Zipit · RBZ rates" vertex="1">
+          <mxGeometry height="49" width="210" x="830" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="rOrm" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;" value="SQLAlchemy 2.0 ORM&#xa;get_db_with_rls() · Alembic" vertex="1">
+          <mxGeometry height="62" width="250" x="1300" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="nNginx" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rAuth" value="proxy_pass http://backend:8000/">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="nNginx" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rPatients" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="nNginx" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rRecords" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="nNginx" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rSearch" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="rAuth" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="sSec" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="rPatients" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="sRls" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="rSearch" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="sEmb" value="embed query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="rBilling" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="sBill" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="rLab" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="sNotif" value="critical result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="sBill" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;dashed=1;dashPattern=2 2;rounded=0;" target="sAudit" value="log_audit_event()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="sSec" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rOrm" value="staff_credentials">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="sRls" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rOrm" value="patients · records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="sBill" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rOrm" value="invoices · payments">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="sEmb" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="rOrm" value="chunks · embeddings (cosine &lt;=&gt;)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="sAudit" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;dashed=1;dashPattern=2 2;rounded=0;" target="rOrm" value="audit_logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pgGroup" connectable="0" parent="1" style="group;fillColor=none;strokeColor=#6c8ebf;" value="" vertex="1">
+          <mxGeometry height="230" width="430" x="1230" y="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="pgShape" parent="pgGroup" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;fillColor=#dae8fc;strokeColor=#6c8ebf;whiteSpace=wrap;" value="" vertex="1">
+          <mxGeometry height="230" width="430" as="geometry" />
+        </mxCell>
+        <mxCell id="pgText" parent="pgGroup" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="PostgreSQL 16 + pgvector · DB: _emr&lt;br&gt;:5432&lt;br&gt;patients · staff · departments&lt;br&gt;medical_records · diagnoses · prescriptions&lt;br&gt;admissions · beds · lab_orders · lab_results&lt;br&gt;medications · pharmacy_batches&lt;br&gt;billing_invoices · payments · audit_logs&lt;br&gt;clinical_document_chunks (vector 384)&lt;br&gt;patient_clinical_embeddings" vertex="1">
+          <mxGeometry height="160" width="250" x="90" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="hfGroup" connectable="0" parent="1" style="group;fillColor=none;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="210" width="380" x="680" y="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="hfShape" parent="hfGroup" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;fillColor=#fff2cc;strokeColor=#d6b656;whiteSpace=wrap;" value="" vertex="1">
+          <mxGeometry height="210" width="380" as="geometry" />
+        </mxCell>
+        <mxCell id="hfText" parent="hfGroup" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="HuggingFace cache volume&#xa;huggingface_cache&#xa;all-MiniLM-L6-v2&#xa;CPU inference · offline" vertex="1">
+          <mxGeometry height="110" width="220" x="80" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="rOrm" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;startArrow=classicThin;startFill=1;rounded=0;" target="pgShape" value="psycopg2 · Alembic migrations">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="sEmb" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;" target="hfShape" value="load / cache model">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="rRecords" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;endArrow=classicThin;endFill=1;dashed=1;dashPattern=2 2;rounded=0;" target="nApi" value="JSON response">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
